@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#07152f">
+    <title>Sign Up | A FARI DATA SUB</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 24px;
+            font-family: Arial, sans-serif;
+            color: #fff;
+            background: #07152f;
+        }
+        .signup-container {
+            width: 100%;
+            max-width: 430px;
+            padding: 30px 24px;
+            border: 1px solid rgba(255,255,255,.1);
+            border-radius: 22px;
+            background: #0c2042;
+            box-shadow: 0 15px 45px rgba(0,0,0,.3);
+            animation: appear .7s ease;
+        }
+        @keyframes appear {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .brand {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        .brand img {
+            width: 95px;
+            height: 95px;
+            object-fit: contain;
+            border-radius: 20px;
+            margin-bottom: 12px;
+        }
+        .brand h1 {
+            font-size: 22px;
+            letter-spacing: 1px;
+        }
+        .brand p {
+            color: #aabbd8;
+            font-size: 13px;
+            margin-top: 8px;
+        }
+        .heading {
+            margin-bottom: 22px;
+        }
+        .heading h2 {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+        .heading p {
+            color: #aabbd8;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        .field {
+            margin-bottom: 17px;
+        }
+        .field label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .field input {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #29436b;
+            border-radius: 11px;
+            background: #07152f;
+            color: #fff;
+            font-size: 15px;
+            outline: none;
+        }
+        .field input:focus {
+            border-color: #3985ff;
+            box-shadow: 0 0 0 3px rgba(57,133,255,.12);
+        }
+        .signup-button {
+            width: 100%;
+            padding: 15px;
+            margin-top: 5px;
+            border: none;
+            border-radius: 11px;
+            background: #2475f5;
+            color: #fff;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .signup-button:disabled {
+            opacity: .65;
+            cursor: not-allowed;
+        }
+        .message {
+            display: none;
+            margin-top: 16px;
+            padding: 12px;
+            border-radius: 9px;
+            font-size: 13px;
+            line-height: 1.5;
+            overflow-wrap: anywhere;
+        }
+        .message.error {
+            display: block;
+            background: rgba(255,70,70,.12);
+            color: #ffaaaa;
+        }
+        .message.success {
+            display: block;
+            background: rgba(50,200,120,.12);
+            color: #91f0bd;
+        }
+        .login-link {
+            margin-top: 23px;
+            text-align: center;
+            color: #aabbd8;
+            font-size: 14px;
+        }
+        .login-link a,
+        .back-link {
+            color: #65a1ff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+        }
+        .note {
+            margin-top: 22px;
+            color: #7f94b7;
+            font-size: 11px;
+            line-height: 1.6;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <main class="signup-container">
+        <div class="brand">
+            <img
+                src="A-fari-logo.png.JPG"
+                alt="A FARI DATA SUB Logo"
+                onerror="this.style.display='none'"
+            >
+            <h1>A FARI DATA SUB</h1>
+            <p>Fast, Reliable and Affordable Services</p>
+        </div>
+        <div class="heading">
+            <h2>Create Account</h2>
+            <p>Register to start using A FARI DATA SUB.</p>
+        </div>
+        <form id="signupForm">
+            <div class="field">
+                <label for="fullName">Full Name</label>
+                <input
+                    type="text"
+                    id="fullName"
+                    autocomplete="name"
+                    placeholder="Enter your full name"
+                    required
+                    minlength="2"
+                    maxlength="100"
+                >
+            </div>
+            <div class="field">
+                <label for="email">Email Address</label>
+                <input
+                    type="email"
+                    id="email"
+                    autocomplete="email"
+                    placeholder="Enter your email"
+                    required
+                >
+            </div>
+            <div class="field">
+                <label for="phone">Phone Number (Optional)</label>
+                <input
+                    type="tel"
+                    id="phone"
+                    autocomplete="tel"
+                    placeholder="Enter your phone number"
+                    maxlength="20"
+                >
+            </div>
+            <div class="field">
+                <label for="password">Password</label>
+                <input
+                    type="password"
+                    id="password"
+                    autocomplete="new-password"
+                    placeholder="Create a password"
+                    required
+                    minlength="8"
+                >
+            </div>
+            <div class="field">
+                <label for="confirmPassword">Confirm Password</label>
+                <input
+                    type="password"
+                    id="confirmPassword"
+                    autocomplete="new-password"
+                    placeholder="Enter password again"
+                    required
+                    minlength="8"
+                >
+            </div>
+            <button
+                type="submit"
+                class="signup-button"
+                id="signupButton"
+            >
+                CREATE ACCOUNT
+            </button>
+            <div
+                id="message"
+                class="message"
+                role="status"
+                aria-live="polite"
+            ></div>
+        </form>
+        <div class="login-link">
+            Already have an account?
+            <a href="login.html">Log In</a>
+       
+            Your account details are handled through Supabase Authentication.
+            Never share your password with anyone.
+        </p>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+    <script>
+        const signupForm = document.getElementById("signupForm");
+        const signupButton = document.getElementById("signupButton");
+        const messageBox = document.getElementById("message");
+        function showMessage(text, type) {
+            messageBox.textContent = text;
+            messageBox.className = "message " + type;
+        }
+        signupForm.addEventListener("submit", async function (event) {
+            event.preventDefault();
+            const fullName = document.getElementById("fullName").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const phone = document.getElementById("phone").value.trim();
+            const password = document.getElementById("password").value;
+            const confirmPassword =
+                document.getElementById("confirmPassword").value;
+            if (fullName.length < 2) {
+                showMessage("Please enter your full name.", "error");
+                return;
+            }
+            if (password.length < 8) {
+                showMessage(
+                    "Your password must be at least 8 characters long.",
+                    "error"
+                );
+                return;
+            }
+            if (password !== confirmPassword) {
+                showMessage("The passwords do not match.", "error");
+                return;
+            }
+            if (
+                !window.supabase ||
+                typeof supabaseClient === "undefined"
+            ) {
+                showMessage(
+                    "Supabase did not load. Check your internet connection and configuration.",
+                    "error"
+                );
+                return;
+            }
+            signupButton.disabled = true;
+            signupButton.textContent = "CREATING ACCOUNT...";
+            try {
+                const { data, error } = await supabaseClient.auth.signUp({
+                    email: email,
+                    password: password,
+                    options: {
+                        data: {
+                            full_name: fullName,
+                            phone_number: phone || null
+                        }
+                    }
+                });
+                if (error) {
+                    throw error;
+                }
+                if (data.session) {
+                    showMessage(
+                        "Account created successfully! Opening your dashboard...",
+                        "success"
+                    );
+                    setTimeout(function () {
+                        window.location.href = "index.html";
+                    }, 1200);
+                } else {
+                    showMessage(
+                        "Registration submitted. Check your email for a confirmation link before logging in.",
+                        "success"
+                    );
+                }
+            } catch (error) {
+                showMessage(
+                    error.message || "Registration failed. Please try again.",
+                    "error"
+                );
+            } finally {
+                signupButton.disabled = false;
+                signupButton.textContent = "CREATE ACCOUNT";
+            }
+        });
+    </script>
+<!-- Supabase Library -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<!-- Supabase Configuration -->
+<script src="supabase-config.js"></script>
+
+</body>
+</html>

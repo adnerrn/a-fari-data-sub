@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>A FARI DATA SUB | Admin</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f3f6fc;
+            color: #17233c;
+        }
+
+        header {
+            height: 75px;
+            background: #ffffff;
+            border-bottom: 1px solid #e0e7f2;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 16px;
+            position: sticky;
+            top: 0;
+            z-index: 1100;
+        }
+
+        header img {
+            width: 48px;
+            height: 48px;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+
+        .brand h2 {
+            color: #145bdb;
+            font-size: 17px;
+        }
+
+        .brand p {
+            color: #64748b;
+            font-size: 12px;
+            margin-top: 4px;
+        }
+
+        .admin-layout {
+            display: block;
+            min-height: calc(100vh - 75px);
+        }
+
+        /* MENU NA GEFEN HAGU */
+
+        .admin-sidebar {
+            position: fixed;
+            top: 75px;
+            bottom: 0;
+            left: 0;
+            width: 255px;
+            padding: 18px 12px;
+            background: #ffffff;
+            border-right: 1px solid #e0e7f2;
+            overflow-y: auto;
+            z-index: 1000;
+
+            transform: translateX(-100%);
+            visibility: hidden;
+            transition:
+                transform 0.25s ease,
+                visibility 0.25s ease;
+        }
+
+        .admin-sidebar.open {
+            transform: translateX(0);
+            visibility: visible;
+        }
+
+        .sidebar-title {
+            color: #64748b;
+            font-size: 12px;
+            font-weight: bold;
+            margin: 4px 10px 15px;
+        }
+
+        .menu-button {
+            display: block;
+            width: 100%;
+            padding: 14px 12px;
+            margin-bottom: 6px;
+            border: none;
+            border-radius: 9px;
+            background: transparent;
+            color: #334155;
+            text-align: left;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        .menu-button:hover,
+        .menu-button.active {
+            background: #eaf1ff;
+            color: #145bdb;
+        }
+
+        /* BABBAR WURIN AIKI */
+
+        .admin-main {
+            width: 100%;
+            padding: 18px 16px 35px;
+        }
+
+        .menu-toggle {
+            width: 48px;
+            height: 44px;
+            border: none;
+            border-radius: 9px;
+            background: #145bdb;
+            color: white;
+            font-size: 25px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+
+        .page-heading {
+            margin-bottom: 20px;
+        }
+
+        .page-heading h1 {
+            font-size: 24px;
+            color: #145bdb;
+            margin-bottom: 7px;
+        }
+
+        .page-heading p {
+            color: #64748b;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .notice {
+            background: #fff8e6;
+            color: #805b00;
+            border: 1px solid #f4df9b;
+            border-radius: 10px;
+            padding: 14px;
+            margin-bottom: 20px;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .stat-card {
+            background: white;
+            border: 1px solid #e0e7f2;
+            border-radius: 12px;
+            padding: 17px 13px;
+            box-shadow: 0 3px 12px rgba(20, 50, 100, 0.04);
+        }
+
+        .stat-card p {
+            color: #64748b;
+            font-size: 12px;
+            margin-bottom: 12px;
+        }
+
+        .stat-card h2 {
+            color: #145bdb;
+            font-size: 23px;
+        }
+
+        .section-card {
+            background: white;
+            padding: 18px;
+            border-radius: 12px;
+            border: 1px solid #e0e7f2;
+            margin-bottom: 16px;
+        }
+
+        .section-card h3 {
+            margin-bottom: 10px;
+            color: #145bdb;
+            font-size: 17px;
+        }
+
+        .section-card p {
+            font-size: 14px;
+            line-height: 1.7;
+            color: #64748b;
+        }
+
+        .section-card ul {
+            padding-left: 20px;
+            color: #64748b;
+            line-height: 2;
+            font-size: 14px;
+        }
+
+        .status-label {
+            display: inline-block;
+            background: #fff0f0;
+            color: #b42318;
+            padding: 6px 10px;
+            border-radius: 7px;
+            font-size: 12px;
+            margin-top: 12px;
+        }
+
+        footer {
+            padding: 20px 0;
+            text-align: center;
+            color: #94a3b8;
+            font-size: 12px;
+        }
+
+        @media (min-width: 700px) {
+            .admin-main {
+                padding: 25px;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .admin-sidebar {
+                transition: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+
+    <header>
+        <img
+            src="A-fari-logo.png.JPG"
+            alt="A FARI DATA SUB Logo"
+        >
+
+        <div class="brand">
+            <h2>A FARI DATA SUB</h2>
+            <p>Administrator Dashboard</p>
+        </div>
+    </header>
+
+    <div class="admin-layout">
+
+        <!-- SIDEBAR MENU -->
+
+        <aside
+            class="admin-sidebar"
+            id="adminSidebar"
+        >
+            <p class="sidebar-title">ADMIN MENU</p>
+
+            <button class="menu-button active"
+                data-section="overview">
+                🏠 Overview
+            </button>
+
+            <button class="menu-button"
+                data-section="users">
+                👥 Users
+            </button>
+
+            <button class="menu-button"
+                data-section="dataPlans">
+                📶 Data Plans
+            </button>
+
+            <button class="menu-button"
+                data-section="pricing">
+                💰 Pricing
+            </button>
+
+            <button class="menu-button"
+                data-section="transactions">
+                📋 Transactions
+            </button>
+
+            <button class="menu-button"
+                data-section="wallet">
+                👛 Wallet
+            </button>
+
+            <button class="menu-button"
+                data-section="provider">
+                🔌 VTU Provider
+            </button>
+
+            <button class="menu-button"
+                data-section="reports">
+                📊 Reports
+            </button>
+
+            <button class="menu-button"
+                data-section="settings">
+                ⚙️ Settings
+            </button>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+
+        <main class="admin-main">
+
+            <button
+                type="button"
+                class="menu-toggle"
+                id="menuToggle"
+                aria-label="Open admin menu"
+                aria-expanded="false"
+            >☰</button>
+
+            <div id="adminContent"></div>
+
+            <footer>
+                © 2026 A FARI DATA SUB
+            </footer>
+
+        </main>
+
+    </div>
+
+    <script>
+        const content =
+            document.getElementById("adminContent");
+
+        const sidebar =
+            document.getElementById("adminSidebar");
+
+        const menuToggle =
+            document.getElementById("menuToggle");
+
+        const menuButtons =
+            document.querySelectorAll("[data-section]");
+
+        const sections = {
+
+            overview: `
+                <div class="page-heading">
+                    <h1>Dashboard Overview</h1>
+                    <p>Welcome to your A FARI DATA SUB admin dashboard.</p>
+                </div>
+
+                <div class="notice">
+                    <strong>Demo Mode:</strong>
+                    These are sample statistics. Real figures will
+                    appear after you connect a backend and database.
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <p>Total Users</p>
+                        <h2>--</h2>
+                    </div>
+
+                    <div class="stat-card">
+                        <p>Total Transactions</p>
+                        <h2>--</h2>
+                    </div>
+
+                    <div class="stat-card">
+                        <p>Total Revenue</p>
+                        <h2>--</h2>
+                    </div>
+
+                    <div class="stat-card">
+                        <p>Pending Transactions</p>
+                        <h2>--</h2>
+                    </div>
+
+                    <div class="stat-card">
+                        <p>Successful Transactions</p>
+                        <h2>--</h2>
+                    </div>
+
+                    <div class="stat-card">
+                        <p>Registered Networks</p>
+                        <h2>4</h2>
+                    </div>
+                </div>
+
+                <div class="section-card">
+                    <h3>Quick Information</h3>
+                    <p>
+                        Use the menu button to open the admin navigation.
+                        Choose a section to view its dashboard page.
+                    </p>
+                </div>
+            `,
+
+            users: `
+                <div class="page-heading">
+                    <h1>Users Management</h1>
+                    <p>Manage registered customer accounts.</p>
+                </div>
+
+                <div class="section-card">
+                    <h3>Customer Records</h3>
+                    <p>
+                        Customer records will appear here after a backend
+                        and database have been connected.
+                    </p>
+                    <span class="status-label">Not Connected</span>
+                </div>
+            `,
+
+            dataPlans: `
+                <div class="page-heading">
+                    <h1>Data Plans</h1>
+                    <p>Manage available mobile data bundles.</p>
+                </div>
+
+                <div class="section-card">
+                    <h3>Supported Networks</h3>
+                    <ul>
+                        <li>MTN</li>
+                        <li>Airtel</li>
+                        <li>Glo</li>
+                        <li>9mobile</li>
+                    </ul>
+                </div>
+
+                <div class="section-card">
+                    <h3>Manage Data Bundles</h3>
+                    <p>
+                        Adding, editing, and saving real data plans
+                        requires a backend and database.
+                    </p>
+                    <span class="status-label">Demo Only</span>
+                </div>
+            `,
+
+            pricing: `
+                <div class="page-heading">
+                    <h1>Pricing Management</h1>
+                    <p>Configure prices for data and airtime.</p>
+                </div>
+
+                <div class="section-card">
+                    <h3>Prices</h3>
+                    <p>
+                        Real prices and changes to pricing will be
+                        available after the backend is connected.
+                    </p>
+                    <span class="status-label">Not Connected</span>
+                </div>
+            `,
+
+            transactions: `
+                <div class="page-heading">
+                    <h1>Transactions</h1>
+                    <p>View customer purchases and transaction statuses.</p>
+                </div>
+
+                <div class="section-card">
+                    <h3>Transaction History</h3>
+                    <p>
+                        No live transaction records are available in this
+                        frontend demo. A backend is needed to record and
+                        display actual purchases.
+                    </p>
+                    <span class="status-label">Demo Only</span>
+                </div>
+            `,
+
+            wallet: `
+                <div class="page-heading">
+                    <h1>Wallet Management</h1>
+                    <p>Manage customer wallet balances.</p>
+                </div>
+
+                <div class="section-card">
+                    <h3>Wallet Records</h3>
+                    <p>
+                        Real wallet balances and wallet operations must
+                        be handled securely on a backend server.
+                    </p>
+                    <span class="status-label">Not Connected</span>
+                </div>
+            `,
+
+            provider: `
+                <div class="page-heading">
+                    <h1>VTU Provider</h1>
+                    <p>Integration settings for authorized VTU services.</p>
+                </div>
+
+                <div class="section-card">
+                    <h3>Provider Connection</h3>
+                    <p>
+                        Connect an authorized VTU provider through a
+                        secure backend. Keep API keys and secret
+                        credentials off the website frontend.
+                    </p>
+                    <span class="status-label">Not Connected</span>
+                </div>
+            `,
+
+            reports: `
+                <div class="page-heading">
+                    <h1>Reports</h1>
+                    <p>Review sales and transaction reports.</p>
+                </div>
+
+                <div class="section-card">
+                    <h3>Business Reports</h3>
+                    <p>
+                        Reports will be available after real transactions
+                        are stored in the database.
+                    </p>
+                    <span class="status-label">Demo Only</span>
+                </div>
+            `,
+
+            settings: `
+                <div class="page-heading">
+                    <h1>Settings</h1>
+                    <p>Configure your admin dashboard.</p>
+                </div>
+
+                <div class="section-card">
+                    <h3>Application Settings</h3>
+                    <p>
+                        Saved settings, admin accounts, and access
+                        permissions require a backend.
+                    </p>
+                    <span class="status-label">Demo Only</span>
+                </div>
+            `
+        };
+
+        function closeMenu() {
+            sidebar.classList.remove("open");
+
+            menuToggle.setAttribute(
+                "aria-expanded",
+                "false"
+            );
+
+            menuToggle.setAttribute(
+                "aria-label",
+                "Open admin menu"
+            );
+        }
+
+        menuToggle.addEventListener("click", function() {
+            const isOpen =
+                sidebar.classList.toggle("open");
+
+            menuToggle.setAttribute(
+                "aria-expanded",
+                String(isOpen)
+            );
+
+            menuToggle.setAttribute(
+                "aria-label",
+                isOpen
+                    ? "Close admin menu"
+                    : "Open admin menu"
+            );
+        });
+
+        function showSection(sectionName) {
+            if (
+                !Object.prototype.hasOwnProperty.call(
+                    sections,
+                    sectionName
+                )
+            ) {
+                return;
+            }
+
+            content.innerHTML = sections[sectionName];
+
+            menuButtons.forEach(function(button) {
+                button.classList.toggle(
+                    "active",
+                    button.dataset.section === sectionName
+                );
+            });
+
+            closeMenu();
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        }
+
+        menuButtons.forEach(function(button) {
+            button.addEventListener("click", function() {
+                showSection(button.dataset.section);
+            });
+        });
+
+        showSection("overview");
+    </script>
+
+</body>
+</html>

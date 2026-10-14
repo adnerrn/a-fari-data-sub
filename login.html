@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#07152f">
+    <title>Login | A FARI DATA SUB</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 24px;
+            font-family: Arial, sans-serif;
+            color: #fff;
+            background: #07152f;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 420px;
+            padding: 30px 24px;
+            border: 1px solid rgba(255,255,255,.1);
+            border-radius: 22px;
+            background: #0c2042;
+            box-shadow: 0 15px 45px rgba(0,0,0,.3);
+            animation: appear .7s ease;
+        }
+
+        @keyframes appear {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .logo-container {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .logo-container img {
+            width: 105px;
+            height: 105px;
+            object-fit: contain;
+            border-radius: 22px;
+            margin-bottom: 14px;
+        }
+
+        .logo-container h1 {
+            font-size: 23px;
+            letter-spacing: 1px;
+        }
+
+        .logo-container p,
+        .form-title p {
+            color: #aabbd8;
+            font-size: 14px;
+            margin-top: 8px;
+            line-height: 1.5;
+        }
+
+        .logo-container p {
+            font-size: 13px;
+        }
+
+        .form-title {
+            margin-bottom: 22px;
+        }
+
+        .form-title h2 {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        .input-group {
+            margin-bottom: 18px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 9px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #29436b;
+            border-radius: 11px;
+            background: #07152f;
+            color: #fff;
+            font-size: 15px;
+            outline: none;
+        }
+
+        .input-group input:focus {
+            border-color: #3985ff;
+            box-shadow: 0 0 0 3px rgba(57,133,255,.12);
+        }
+
+        .password-wrapper {
+            position: relative;
+        }
+
+        .password-wrapper input {
+            padding-right: 65px;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #79aaff;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .login-button {
+            width: 100%;
+            padding: 15px;
+            margin-top: 5px;
+            border: none;
+            border-radius: 11px;
+            background: #2475f5;
+            color: #fff;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .login-button:disabled {
+            opacity: .65;
+            cursor: not-allowed;
+        }
+
+        .message {
+            display: none;
+            padding: 12px;
+            margin-top: 16px;
+            border-radius: 9px;
+            font-size: 13px;
+            line-height: 1.5;
+            overflow-wrap: anywhere;
+        }
+
+        .message.error {
+            display: block;
+            background: rgba(255,70,70,.12);
+            color: #ffaaaa;
+            border: 1px solid rgba(255,70,70,.3);
+        }
+
+        .message.success {
+            display: block;
+            background: rgba(50,200,120,.12);
+            color: #91f0bd;
+            border: 1px solid rgba(50,200,120,.3);
+        }
+
+        .signup-link,
+        .back-link {
+            text-align: center;
+            margin-top: 22px;
+            font-size: 14px;
+        }
+
+        .signup-link {
+            color: #aabbd8;
+        }
+
+        .signup-link a,
+        .back-link {
+            color: #65a1ff;
+            text-decoration: none;
+        }
+
+        .signup-link a {
+            font-weight: bold;
+        }
+
+        .back-link {
+            display: block;
+            font-size: 13px;
+        }
+
+        .security-note {
+            margin-top: 22px;
+            text-align: center;
+            color: #7f94b7;
+            font-size: 11px;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+
+<body>
+    <main class="login-container">
+
+        <div class="logo-container">
+            <img
+                src="A-fari-logo.png.JPG"
+                alt="A FARI DATA SUB Logo"
+                onerror="this.style.display='none'"
+            >
+            <h1>A FARI DATA SUB</h1>
+            <p>Fast, Reliable and Affordable Services</p>
+        </div>
+
+        <div class="form-title">
+            <h2>Welcome Back 👋</h2>
+            <p>Log in to your account to continue.</p>
+        </div>
+
+        <form id="loginForm">
+            <div class="input-group">
+                <label for="email">Email Address</label>
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="Enter your email"
+                    autocomplete="email"
+                    required
+                >
+            </div>
+
+            <div class="input-group">
+                <label for="password">Password</label>
+
+                <div class="password-wrapper">
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Enter your password"
+                        autocomplete="current-password"
+                        required
+                    >
+
+                    <button
+                        type="button"
+                        class="toggle-password"
+                        id="togglePassword"
+                    >SHOW</button>
+                </div>
+            </div>
+
+            <button
+                type="submit"
+                class="login-button"
+                id="loginButton"
+            >LOG IN</button>
+
+            <div
+                id="message"
+                class="message"
+                role="status"
+                aria-live="polite"
+            ></div>
+        </form>
+
+        <div class="signup-link">
+            Don't have an account?
+            <a href="signup.html">Sign Up</a>
+        </div>
+
+        <a href="index.html" class="back-link">
+            ← Back to Home
+        </a>
+
+        <p class="security-note">
+            Your account is protected by Supabase Authentication.
+        </p>
+    </main>
+
+    <!-- Load Supabase only once -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+
+    <script>
+        const loginForm = document.getElementById("loginForm");
+        const loginButton = document.getElementById("loginButton");
+        const messageBox = document.getElementById("message");
+        const passwordInput = document.getElementById("password");
+        const togglePassword = document.getElementById("togglePassword");
+
+        function showMessage(text, type) {
+            messageBox.textContent = text;
+            messageBox.className = "message " + type;
+        }
+
+        togglePassword.addEventListener("click", function () {
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                togglePassword.textContent = "HIDE";
+            } else {
+                passwordInput.type = "password";
+                togglePassword.textContent = "SHOW";
+            }
+        });
+
+        loginForm.addEventListener("submit", async function (event) {
+            event.preventDefault();
+
+            const email = document.getElementById("email").value.trim();
+            const password = passwordInput.value;
+
+            // Check the actual client created by supabase-config.js
+            const client = window.supabaseClient;
+
+            if (!window.supabase || !client) {
+                showMessage(
+                    "Supabase is not ready. Check your connection and configuration.",
+                    "error"
+                );
+                return;
+            }
+
+            loginButton.disabled = true;
+            loginButton.textContent = "LOGGING IN...";
+
+            try {
+                const { data, error } = await client.auth.signInWithPassword({
+                    email: email,
+                    password: password
+                });
+
+                if (error) {
+                    if (error.message === "Invalid login credentials") {
+                        throw new Error(
+                            "Email or password was not accepted. Check your details or reset your password."
+                        );
+                    }
+
+                    throw error;
+                }
+
+                if (!data.session) {
+                    showMessage(
+                        "Login was not completed. Please try again.",
+                        "error"
+                    );
+                    return;
+                }
+
+                showMessage(
+                    "Login successful! Opening your dashboard...",
+                    "success"
+                );
+
+                setTimeout(function () {
+                    window.location.href = "index.html";
+                }, 1000);
+
+            } catch (error) {
+                showMessage(
+                    error.message || "Login failed. Please try again.",
+                    "error"
+                );
+            } finally {
+                loginButton.disabled = false;
+                loginButton.textContent = "LOG IN";
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,322 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f5f8ff;
+    color: #172b4d;
+}
+
+header {
+    background: #1455c0;
+    color: white;
+    padding: 25px 15px;
+    text-align: center;
+}
+
+main {
+    padding: 25px 15px;
+    text-align: center;
+}
+
+button {
+    background: #1455c0;
+    color: white;
+    padding: 14px 22px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+}
+.logo {
+    display: block;
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+    margin: 0 auto 12px;
+}
+.site-header {
+    background: #ffffff;
+    color: #1455c0;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    border-bottom: 3px solid #1455c0;
+}
+
+.logo {
+    width: 85px;
+    height: 85px;
+    object-fit: contain;
+}
+
+.brand-text h1 {
+    margin: 0;
+    font-size: 22px;
+    color: #1455c0;
+}
+
+.brand-text p {
+    margin: 6px 0 0;
+    font-size: 13px;
+    color: #0b2d69;
+}
+#getStartedBtn,
+{
+    background: #1455c0;
+    color: white;
+    border: none;
+    padding: 15px 25px;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 20px auto;
+    cursor: pointer;
+}
+
+.dashboard {
+    padding: 25px 15px;
+    text-align: center;
+    background: #f5f8ff;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.service-card {
+    background: white;
+    border: 1px solid #dce6fa;
+    border-radius: 15px;
+    padding: 20px 10px;
+    box-shadow: 0 3px 10px rgba(20, 85, 192, 0.08);
+    cursor: pointer;
+}
+
+.service-card span {
+    font-size: 35px;
+}
+
+.service-card h3 {
+    color: #1455c0;
+    font-size: 17px;
+}
+
+.service-card p {
+    color: #52627c;
+    font-size: 13px;
+}
+
+@media (max-width: 350px) {
+    .services-grid {
+        grid-template-columns: 1fr;
+    }
+}
+.buy-data-page {
+    min-height: 100vh;
+    padding: 25px 18px;
+    background: #f5f8ff;
+    box-sizing: border-box;
+}
+
+.back-link {
+    display: inline-block;
+    color: #1455c0;
+    text-decoration: none;
+    font-weight: bold;
+    margin-bottom: 25px;
+}
+
+.buy-data-page h2 {
+    color: #1455c0;
+    font-size: 30px;
+    margin-bottom: 8px;
+}
+
+.page-description {
+    color: #52627c;
+    margin-bottom: 25px;
+}
+
+.network-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 15px;
+}
+
+.network-card {
+    background: white;
+    border: 1px solid #dce6fa;
+    border-radius: 15px;
+    padding: 25px 10px;
+    text-align: center;
+    cursor: pointer;
+    color: #1455c0;
+    font: inherit;
+}
+
+.network-card span {
+    font-size: 35px;
+}
+
+.network-card h3 {
+    font-size: 22px;
+    margin: 12px 0;
+}
+
+.network-card p {
+    color: #52627c;
+    font-size: 13px;
+}
+
+.network-message {
+    background: white;
+    border: 1px solid #dce6fa;
+    border-radius: 12px;
+    padding: 18px;
+    margin-top: 25px;
+    color: #1455c0;
+}
+
+.hidden {
+    display: none !important;
+}
+
+@media (max-width: 350px) {
+    .network-grid {
+        grid-template-columns: 1fr;
+    }
+}
+.network-logo {
+    width: 100px;
+    height: 80px;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto 15px;
+}
+.network-logo {
+    width: 100px;
+    height: 80px;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto 15px;
+}
+/* DATA PLANS PAGE */
+
+.data-plans-page {
+    max-width: 800px;
+    margin: 30px auto;
+    padding: 20px;
+}
+
+.plans-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.plan-card {
+    padding: 20px 12px;
+    border: 2px solid #dce6f5;
+    border-radius: 14px;
+    background: white;
+    color: #123b7a;
+    cursor: pointer;
+    text-align: center;
+}
+
+.plan-card h3 {
+    margin: 0 0 10px;
+    font-size: 22px;
+}
+
+.plan-card p {
+    margin: 8px 0;
+}
+
+.plan-card.selected {
+    border-color: #1769ff;
+    background: #edf4ff;
+}
+
+.purchase-form {
+    margin-top: 30px;
+    padding: 20px;
+    border-radius: 14px;
+    background: #f2f6ff;
+}
+
+.purchase-form label {
+    display: block;
+    margin: 15px 0 8px;
+}
+
+.purchase-form input {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 14px;
+    border: 1px solid #b8c8df;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+.continue-button {
+    width: 100%;
+    margin-top: 18px;
+    padding: 15px;
+    border: none;
+    border-radius: 8px;
+    background: #145bdb;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+#statusMessage {
+    overflow-wrap: anywhere;
+    line-height: 1.6;
+}
+
+@media (max-width: 400px) {
+    .plans-grid {
+        grid-template-columns: 1fr;
+    }
+}
+/* DATA SELECTION SECTION */
+
+.data-selection {
+    margin-top: 25px;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 14px;
+}
+
+.data-selection h2 {
+    color: #145bdb;
+    margin-bottom: 20px;
+}
+
+/* PHONE NUMBER SECTION */
+
+.purchase-form {
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 14px;
+    background: #f2f6ff;
+}
+
+.purchase-form input {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 14px;
+    border: 1px solid #b8c8df;
+    border-radius: 8px;
+    font-size: 16px;
+}

@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#07152f">
+
+    <title>Buy Data | A FARI DATA SUB</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* ===== BASE ===== */
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            min-height: 100%;
+            background: #07152f !important;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0 !important;
+            min-height: 100vh;
+            font-family: -apple-system, BlinkMacSystemFont,
+                "Segoe UI", Arial, sans-serif;
+            color: #ffffff !important;
+
+            background-color: #07152f !important;
+            background-image:
+                radial-gradient(
+                    ellipse at top left,
+                    rgba(32, 83, 157, 0.25),
+                    transparent 45%
+                ),
+                linear-gradient(
+                    145deg,
+                    #07152f,
+                    #0b1e40,
+                    #07152f
+                ) !important;
+            background-attachment: fixed !important;
+            background-size: cover !important;
+        }
+
+        a,
+        button {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* ===== HEADER ===== */
+
+        .site-header {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 16px;
+
+            width: 100%;
+            padding: 20px 16px;
+
+            background: rgba(7, 21, 47, 0.96) !important;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+
+            animation: headerEnter 0.65s ease both;
+        }
+
+        .site-header .logo {
+            display: block;
+            width: 68px !important;
+            height: 68px !important;
+            flex-shrink: 0;
+            object-fit: contain;
+
+            animation: logoEnter 0.7s ease both;
+        }
+
+        .brand-text {
+            text-align: left;
+            animation: titleEnter 0.7s ease both;
+        }
+
+        .brand-text h1 {
+            margin: 0 !important;
+            color: #ffffff !important;
+            font-size: clamp(19px, 4.5vw, 28px);
+            line-height: 1.2;
+            font-weight: 800;
+            letter-spacing: 0.3px;
+        }
+
+        .brand-text p {
+            display: none !important;
+        }
+
+        /* ===== BACK BUTTON ===== */
+
+        .buy-data-page {
+            width: 100%;
+            max-width: 780px;
+            margin: 0 auto;
+            padding: 20px 18px 40px;
+            background: transparent !important;
+        }
+
+        .back-link {
+            display: inline-flex !important;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+
+            margin: 0 0 28px;
+            padding: 9px 12px;
+
+            color: #d9e7ff !important;
+            background: transparent !important;
+            border: none !important;
+            border-radius: 10px;
+
+            font-family: inherit;
+            font-size: 15px;
+            font-weight: 600;
+            text-decoration: none !important;
+
+            transition:
+                background 0.2s ease,
+                transform 0.2s ease;
+
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .back-link:active {
+            transform: translateX(-3px);
+            background: rgba(255, 255, 255, 0.07) !important;
+        }
+
+        .back-icon {
+            font-size: 23px;
+            line-height: 1;
+        }
+
+        /* ===== PAGE HEADING ===== */
+
+        .page-heading {
+            margin-bottom: 29px;
+            text-align: center;
+            animation: contentEnter 0.55s ease both;
+        }
+
+        .page-heading h2 {
+            margin: 0 !important;
+            color: #ffffff !important;
+            font-size: clamp(33px, 8vw, 45px);
+            font-weight: 800;
+        }
+
+        .page-description {
+            margin: 11px 0 0 !important;
+            color: #c3d2ea !important;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .heading-line {
+            width: 52px;
+            height: 4px;
+            margin: 15px auto 0;
+            border-radius: 20px;
+            background: linear-gradient(
+                90deg,
+                #4c91ff,
+                #9ec9ff
+            );
+        }
+
+        /* ===== NETWORK GRID ===== */
+
+        .network-grid {
+            display: grid !important;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 15px;
+            background: transparent !important;
+        }
+
+        .network-card {
+            display: flex !important;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 11px;
+
+            position: relative;
+            overflow: hidden;
+
+            width: 100% !important;
+            min-width: 0;
+            min-height: 215px;
+            padding: 20px 10px;
+
+            color: #ffffff !important;
+            font-family: inherit;
+            text-align: center;
+            cursor: pointer;
+
+            background: #102344 !important;
+            border: 1px solid rgba(163, 195, 244, 0.18) !important;
+            border-radius: 21px !important;
+
+            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.16);
+
+            animation: cardEnter 0.55s ease both;
+
+            transition:
+                transform 0.2s ease,
+                background-color 0.2s ease,
+                border-color 0.2s ease;
+        }
+
+        .network-card:nth-child(2) {
+            animation-delay: 0.07s;
+        }
+
+        .network-card:nth-child(3) {
+            animation-delay: 0.14s;
+        }
+
+        .network-card:nth-child(4) {
+            animation-delay: 0.21s;
+        }
+
+        .network-card:active {
+            transform: scale(0.96);
+            background: #19345d !important;
+            border-color: #6fa9ff !important;
+        }
+
+        .network-card:focus-visible {
+            outline: 2px solid #8bbcff;
+            outline-offset: 3px;
+        }
+
+        /* ===== NETWORK LOGOS ===== */
+
+        .network-logo-box {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            width: 115px !important;
+            height: 78px !important;
+            flex-shrink: 0;
+        }
+
+        .network-logo {
+            display: block !important;
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: contain !important;
+        }
+
+        .network-card h3 {
+            margin: 0 !important;
+            color: #ffffff !important;
+            font-size: 22px;
+            font-weight: 800;
+        }
+
+        .network-card p {
+            margin: 0 !important;
+            color: #c3d2ea !important;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        .network-arrow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            width: 25px;
+            height: 25px;
+
+            color: #d8e7ff !important;
+            background: rgba(255, 255, 255, 0.08) !important;
+            border-radius: 50%;
+
+            font-size: 21px;
+            line-height: 1;
+        }
+
+        /* ===== FOOTER ===== */
+
+        .page-footer {
+            margin-top: 30px;
+            padding: 10px 0;
+            color: #91a8cb !important;
+            font-size: 12px;
+            text-align: center;
+            background: transparent !important;
+        }
+
+        /* ===== ANIMATIONS ===== */
+
+        @keyframes headerEnter {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes logoEnter {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes titleEnter {
+            from {
+                opacity: 0;
+                transform: translateX(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes contentEnter {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes cardEnter {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ===== SMALL SCREENS ===== */
+
+        @media (max-width: 380px) {
+            .site-header {
+                gap: 11px;
+                padding: 16px 12px;
+            }
+
+            .site-header .logo {
+                width: 53px !important;
+                height: 53px !important;
+            }
+
+            .buy-data-page {
+                padding: 18px 12px 30px;
+            }
+
+            .network-grid {
+                gap: 11px;
+            }
+
+            .network-card {
+                min-height: 190px;
+                padding: 15px 7px;
+                gap: 9px;
+                border-radius: 18px !important;
+            }
+
+            .network-logo-box {
+                width: 92px !important;
+                height: 67px !important;
+            }
+
+            .network-card h3 {
+                font-size: 20px;
+            }
+
+            .network-card p {
+                font-size: 11px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation: none !important;
+                transition: none !important;
+                scroll-behavior: auto !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="site-header">
+
+        <img
+            src="A-fari-logo.png.JPG"
+            alt="A FARI DATA SUB Logo"
+            class="logo"
+        >
+
+        <div class="brand-text">
+            <h1>A FARI DATA SUB</h1>
+        </div>
+
+    </header>
+
+    <main class="buy-data-page">
+
+        <a href="index.html" class="back-link">
+            <span class="back-icon" aria-hidden="true">←</span>
+            <span>Back</span>
+        </a>
+
+        <section class="page-heading">
+            <h2>Buy Data</h2>
+
+            <p class="page-description">
+                Select your mobile network
+            </p>
+
+            <div class="heading-line"></div>
+        </section>
+
+        <div class="network-grid">
+
+            <!-- MTN -->
+            <button
+                type="button"
+                class="network-card"
+                onclick="openDataPlans('MTN')"
+                aria-label="Choose MTN data"
+            >
+                <span class="network-logo-box">
+                    <img
+                        src="images/mtn.png.jpg"
+                        alt="MTN"
+                        class="network-logo"
+                    >
+                </span>
+
+                <h3>MTN</h3>
+                <p>Choose MTN Data</p>
+                <span class="network-arrow" aria-hidden="true">›</span>
+            </button>
+
+            <!-- AIRTEL -->
+            <button
+                type="button"
+                class="network-card"
+                onclick="openDataPlans('Airtel')"
+                aria-label="Choose Airtel data"
+            >
+                <span class="network-logo-box">
+                    <img
+                        src="images/airtel.png.jpg"
+                        alt="Airtel"
+                        class="network-logo"
+                    >
+                </span>
+
+                <h3>Airtel</h3>
+                <p>Choose Airtel Data</p>
+                <span class="network-arrow" aria-hidden="true">›</span>
+            </button>
+
+            <!-- GLO -->
+            <button
+                type="button"
+                class="network-card"
+                onclick="openDataPlans('Glo')"
+                aria-label="Choose Glo data"
+            >
+                <span class="network-logo-box">
+                    <img
+                        src="images/glo.png.jpg"
+                        alt="Glo"
+                        class="network-logo"
+                    >
+                </span>
+
+                <h3>Glo</h3>
+                <p>Choose Glo Data</p>
+                <span class="network-arrow" aria-hidden="true">›</span>
+            </button>
+
+            <!-- 9MOBILE -->
+            <button
+                type="button"
+                class="network-card"
+                onclick="openDataPlans('9mobile')"
+                aria-label="Choose 9mobile data"
+            >
+                <span class="network-logo-box">
+                    <img
+                        src="images/9mobile.png.jpg"
+                        alt="9mobile"
+                        class="network-logo"
+                    >
+                </span>
+
+                <h3>9mobile</h3>
+                <p>Choose 9mobile Data</p>
+                <span class="network-arrow" aria-hidden="true">›</span>
+            </button>
+
+        </div>
+
+        <footer class="page-footer">
+            A FARI DATA SUB
+        </footer>
+
+    </main>
+
+    <script>
+        "use strict";
+
+        function openDataPlans(network) {
+            const allowedNetworks = [
+                "MTN",
+                "Airtel",
+                "Glo",
+                "9mobile"
+            ];
+
+            if (!allowedNetworks.includes(network)) {
+                return;
+            }
+
+            window.location.href =
+                "data-plans.html?network=" +
+                encodeURIComponent(network);
+        }
+    </script>
+
+</body>
+</html>

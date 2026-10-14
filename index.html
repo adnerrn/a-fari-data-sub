@@ -1,0 +1,1374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#06142E">
+
+    <title>A FARI DATA SUB</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #06142E;
+            --panel: #0D2042;
+            --panel-light: #142B52;
+            --blue: #287BFF;
+            --cyan: #26D9FF;
+            --white: #FFFFFF;
+            --muted: #A9B8D2;
+            --border: rgba(255,255,255,0.09);
+        }
+
+        html {
+            min-height: 100%;
+            background: var(--bg);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--white);
+            min-height: 100vh;
+        }
+
+        button, a {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        button {
+            font: inherit;
+            cursor: pointer;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* =====================================
+           NEW WELCOME PAGE
+        ===================================== */
+
+        #welcomePage {
+            min-height: 100vh;
+            min-height: 100dvh;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 35px 24px;
+
+            background:
+                radial-gradient(
+                    circle at 50% 20%,
+                    rgba(40,123,255,0.20),
+                    transparent 42%
+                ),
+                linear-gradient(
+                    160deg,
+                    #06142E 0%,
+                    #0B1E40 55%,
+                    #06142E 100%
+                );
+        }
+
+        .welcome-content {
+            width: 100%;
+            max-width: 420px;
+            text-align: center;
+            animation: welcomeAppear 0.9s ease both;
+        }
+
+        .welcome-logo {
+            width: 145px;
+            height: 145px;
+
+            margin: 0 auto 32px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            overflow: hidden;
+            border-radius: 34px;
+
+            background: linear-gradient(
+                145deg,
+                #122B52,
+                #081731
+            );
+
+            border: 1px solid rgba(255,255,255,0.14);
+
+            box-shadow:
+                0 18px 50px rgba(0,0,0,0.25),
+                0 0 35px rgba(38,217,255,0.08);
+
+            animation: logoFloat 4s ease-in-out infinite;
+        }
+
+        .welcome-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 9px;
+        }
+
+        .welcome-title {
+            color: #FFFFFF;
+            font-size: clamp(27px, 7vw, 36px);
+            font-weight: 900;
+            line-height: 1.25;
+            letter-spacing: 0.4px;
+            margin-bottom: 13px;
+        }
+
+        .welcome-title span {
+            display: block;
+            color: var(--cyan);
+            margin-top: 5px;
+        }
+
+        .welcome-tagline {
+            color: #D2DDF0;
+            font-size: 14px;
+            line-height: 1.7;
+            letter-spacing: 1.3px;
+            margin-bottom: 38px;
+        }
+
+        .welcome-buttons {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+            width: 100%;
+        }
+
+        .welcome-button {
+            min-height: 55px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 14px 10px;
+            border-radius: 15px;
+
+            font-size: 13px;
+            font-weight: 900;
+            letter-spacing: 0.7px;
+            text-decoration: none;
+
+            transition:
+                transform 0.2s ease,
+                background 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+        .signup-button {
+            color: #FFFFFF;
+            background: linear-gradient(
+                110deg,
+                #287BFF,
+                #1764E8
+            );
+
+            border: 1px solid rgba(255,255,255,0.12);
+
+            box-shadow:
+                0 9px 24px rgba(40,123,255,0.23);
+        }
+
+        .signin-button {
+            color: #FFFFFF;
+            background: rgba(255,255,255,0.055);
+
+            border: 1px solid rgba(255,255,255,0.30);
+        }
+
+        .welcome-button:active {
+            transform: scale(0.96);
+        }
+
+        .welcome-footer {
+            color: #7F94B8;
+            font-size: 11px;
+            margin-top: 37px;
+            letter-spacing: 0.5px;
+        }
+
+        /* =====================================
+           DASHBOARD
+        ===================================== */
+
+        #dashboard {
+            min-height: 100vh;
+            padding-bottom: 30px;
+        }
+
+        .topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 18px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .topbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .small-logo {
+            width: 43px;
+            height: 43px;
+            border-radius: 13px;
+            overflow: hidden;
+            background: var(--panel-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .small-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .topbar h2 {
+            font-size: 16px;
+            font-weight: 900;
+        }
+
+        .topbar small {
+            display: block;
+            color: var(--cyan);
+            font-size: 11px;
+            margin-top: 4px;
+        }
+
+        .logout-button {
+            border: 1px solid rgba(255,100,100,0.35);
+            background: rgba(255,80,80,0.08);
+            color: #FF9292;
+            padding: 10px 12px;
+            border-radius: 11px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .page-content {
+            padding: 22px 17px;
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        .greeting {
+            margin-bottom: 22px;
+        }
+
+        .greeting p {
+            color: var(--muted);
+            font-size: 14px;
+            margin-bottom: 7px;
+        }
+
+        .greeting h1 {
+            font-size: 25px;
+            overflow-wrap: anywhere;
+        }
+
+        /* WALLET */
+
+        .wallet-card {
+            padding: 24px 21px;
+            border-radius: 23px;
+            background:
+                radial-gradient(
+                    circle at top right,
+                    rgba(38,217,255,0.23),
+                    transparent 48%
+                ),
+                linear-gradient(135deg, #174A92, #10264B 75%);
+            border: 1px solid rgba(255,255,255,0.13);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            margin-bottom: 28px;
+        }
+
+        .wallet-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .wallet-label {
+            color: #C5D9F7;
+            font-size: 13px;
+        }
+
+        .wallet-icon {
+            font-size: 25px;
+        }
+
+        .wallet-balance {
+            font-size: 32px;
+            font-weight: 900;
+            margin-bottom: 8px;
+            overflow-wrap: anywhere;
+        }
+
+        .wallet-status {
+            font-size: 12px;
+            color: #B8D6FF;
+        }
+
+        .balance-toggle {
+            border: 1px solid rgba(255,255,255,0.18);
+            background: rgba(255,255,255,0.08);
+            color: white;
+            border-radius: 10px;
+            padding: 7px 10px;
+            font-size: 12px;
+            flex-shrink: 0;
+        }
+
+        /* SERVICES */
+
+        .section-heading {
+            font-size: 18px;
+            margin-bottom: 16px;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 13px;
+            margin-bottom: 28px;
+        }
+
+        .service-card {
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 20px 13px;
+            background: var(--panel);
+            color: white;
+            text-align: left;
+            min-height: 135px;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .service-card:active {
+            transform: scale(0.97);
+        }
+
+        .service-icon {
+            width: 47px;
+            height: 47px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 15px;
+            background: rgba(40,123,255,0.16);
+        }
+
+        .service-card h3 {
+            font-size: 15px;
+            margin-bottom: 6px;
+        }
+
+        .service-card p {
+            color: var(--muted);
+            font-size: 11px;
+            line-height: 1.5;
+        }
+
+        /* ACCOUNT DETAILS AND TRANSACTIONS */
+
+        .account-card {
+            padding: 19px;
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            margin-bottom: 22px;
+        }
+
+        .account-card h3 {
+            margin-bottom: 14px;
+            font-size: 16px;
+        }
+
+        .account-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 13px;
+        }
+
+        .account-row:last-child {
+            border-bottom: none;
+        }
+
+        .account-row span:first-child {
+            color: var(--muted);
+            flex-shrink: 0;
+        }
+
+        .account-value {
+            text-align: right;
+            overflow-wrap: anywhere;
+        }
+
+        .account-value-group {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 8px;
+            min-width: 0;
+        }
+
+        .copy-button {
+            border: 1px solid rgba(38,217,255,0.35);
+            background: rgba(38,217,255,0.08);
+            color: var(--cyan);
+            padding: 7px 9px;
+            border-radius: 8px;
+            font-size: 11px;
+            flex-shrink: 0;
+        }
+
+        .copy-button:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .transaction-item {
+            padding: 14px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .transaction-item:last-child {
+            border-bottom: none;
+        }
+
+        .transaction-top {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 7px;
+        }
+
+        .transaction-title {
+            font-size: 13px;
+            font-weight: 700;
+            overflow-wrap: anywhere;
+        }
+
+        .transaction-amount {
+            font-size: 13px;
+            font-weight: 800;
+            text-align: right;
+            overflow-wrap: anywhere;
+        }
+
+        .transaction-meta {
+            color: var(--muted);
+            font-size: 11px;
+            line-height: 1.7;
+            overflow-wrap: anywhere;
+        }
+
+        .transaction-status {
+            display: inline-block;
+            margin-top: 6px;
+            padding: 4px 8px;
+            border-radius: 7px;
+            font-size: 10px;
+            background: rgba(255,255,255,0.07);
+            color: #C5D9F7;
+        }
+
+        .transaction-status.success {
+            color: #8EF0B0;
+            background: rgba(70,220,130,0.1);
+        }
+
+        .transaction-status.failed {
+            color: #FFAAAA;
+            background: rgba(255,80,80,0.1);
+        }
+
+        .empty-state {
+            padding: 20px 5px;
+            text-align: center;
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        .notice {
+            border: 1px solid rgba(38,217,255,0.2);
+            background: rgba(38,217,255,0.06);
+            padding: 15px;
+            border-radius: 14px;
+            color: #C6DDF8;
+            font-size: 12px;
+            line-height: 1.7;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px 10px;
+            color: #7185A7;
+            font-size: 11px;
+        }
+
+        #statusMessage {
+            padding: 13px;
+            border-radius: 12px;
+            margin-bottom: 17px;
+            font-size: 13px;
+            line-height: 1.5;
+            background: var(--panel);
+            color: var(--muted);
+        }
+
+        #statusMessage.error {
+            color: #FFAAAA;
+        }
+
+        /* ANIMATIONS */
+
+        @keyframes welcomeAppear {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes logoFloat {
+            0%, 100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-7px);
+            }
+        }
+
+        @media (max-width: 380px) {
+            .welcome-logo {
+                width: 120px;
+                height: 120px;
+                border-radius: 29px;
+                margin-bottom: 27px;
+            }
+
+            .welcome-tagline {
+                margin-bottom: 30px;
+            }
+
+            .welcome-buttons {
+                gap: 10px;
+            }
+
+            .welcome-button {
+                font-size: 12px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NEW WELCOME PAGE -->
+    <section id="welcomePage">
+        <div class="welcome-content">
+
+            <div class="welcome-logo">
+                <img
+                    src="A-fari-logo.png.JPG"
+                    alt="A FARI DATA SUB Logo"
+                >
+            </div>
+
+            <h1 class="welcome-title">
+                WELCOME TO
+                <span>A FARI DATA SUB</span>
+            </h1>
+
+            <p class="welcome-tagline">
+                Stay Connected, Stay Ahead.
+            </p>
+
+            <div class="welcome-buttons">
+                <a
+                    href="signup.html"
+                    class="welcome-button signup-button"
+                >
+                    SIGN UP
+                </a>
+
+                <a
+                    href="login.html"
+                    class="welcome-button signin-button"
+                >
+                    SIGN IN
+                </a>
+            </div>
+
+            <p class="welcome-footer">
+                FAST • SIMPLE • RELIABLE
+            </p>
+
+        </div>
+    </section>
+
+
+    <!-- DASHBOARD -->
+    <section id="dashboard" class="hidden">
+
+        <header class="topbar">
+
+            <div class="topbar-brand">
+                <div class="small-logo">
+                    <img
+                        src="A-fari-logo.png.JPG"
+                        alt="Logo"
+                    >
+                </div>
+
+                <div>
+                    <h2>A FARI DATA SUB</h2>
+                    <small>USER DASHBOARD</small>
+                </div>
+            </div>
+
+            <button
+                class="logout-button"
+                id="logoutBtn"
+                type="button"
+            >
+                LOG OUT
+            </button>
+
+        </header>
+
+        <main class="page-content">
+
+            <div id="statusMessage" class="hidden"></div>
+
+            <div class="greeting">
+                <p>Welcome back,</p>
+                <h1 id="userName">User 👋</h1>
+            </div>
+
+            <!-- WALLET -->
+            <section class="wallet-card">
+
+                <div class="wallet-top">
+                    <span class="wallet-label">MY WALLET BALANCE</span>
+                    <span class="wallet-icon">💳</span>
+                </div>
+
+                <div class="wallet-top">
+                    <div class="wallet-balance" id="walletBalance">
+                        ₦0.00
+                    </div>
+
+                    <button
+                        class="balance-toggle"
+                        id="balanceToggle"
+                        type="button"
+                    >
+                        👁️ Hide
+                    </button>
+                </div>
+
+                <p class="wallet-status" id="walletStatus">
+                    Loading wallet...
+                </p>
+
+            </section>
+
+            <!-- SERVICES -->
+            <h2 class="section-heading">Our Services</h2>
+
+            <div class="services-grid">
+
+                <button
+                    class="service-card"
+                    type="button"
+                    onclick="openService('buy-data.html')"
+                >
+                    <div class="service-icon">📶</div>
+                    <h3>Buy Data</h3>
+                    <p>Browse available data plans</p>
+                </button>
+
+                <button
+                    class="service-card"
+                    type="button"
+                    onclick="openService('buy-airtime.html')"
+                >
+                    <div class="service-icon">📱</div>
+                    <h3>Buy Airtime</h3>
+                    <p>Recharge your phone</p>
+                </button>
+
+                <button
+                    class="service-card"
+                    type="button"
+                    onclick="showComingSoon('Cable TV')"
+                >
+                    <div class="service-icon">📺</div>
+                    <h3>Cable TV</h3>
+                    <p>Pay your TV subscription</p>
+                </button>
+
+                <button
+                    class="service-card"
+                    type="button"
+                    onclick="showComingSoon('Electricity')"
+                >
+                    <div class="service-icon">💡</div>
+                    <h3>Electricity</h3>
+                    <p>Pay electricity bills</p>
+                </button>
+
+                <button
+                    class="service-card"
+                    type="button"
+                    onclick="showComingSoon('Transfer')"
+                >
+                    <div class="service-icon">💸</div>
+                    <h3>Transfer</h3>
+                    <p>Send money to a bank account</p>
+                </button>
+
+                <button
+                    class="service-card"
+                    type="button"
+                    onclick="showComingSoon('Exam PIN')"
+                >
+                    <div class="service-icon">🎓</div>
+                    <h3>Exam PIN</h3>
+                    <p>Buy WAEC, NECO and JAMB PINs</p>
+                </button>
+
+            </div>
+
+            <!-- ACCOUNT DETAILS -->
+            <section class="account-card">
+
+                <h3>Account Details</h3>
+
+                <div class="account-row">
+                    <span>Bank Name</span>
+                    <span class="account-value" id="bankName">
+                        Awaiting API Integration
+                    </span>
+                </div>
+
+                <div class="account-row">
+                    <span>Account Number</span>
+
+                    <div class="account-value-group">
+                        <span class="account-value" id="accountNumber">
+                            Not available yet
+                        </span>
+
+                        <button
+                            class="copy-button"
+                            id="copyAccountBtn"
+                            type="button"
+                            disabled
+                        >
+                            COPY
+                        </button>
+                    </div>
+                </div>
+
+                <div class="account-row">
+                    <span>Account Holder</span>
+                    <span class="account-value" id="accountHolder">
+                        Loading...
+                    </span>
+                </div>
+
+            </section>
+
+            <!-- TRANSACTION HISTORY -->
+            <section class="account-card">
+
+                <h3>Transaction History</h3>
+
+                <div id="transactionList">
+                    <div class="empty-state">
+                        Loading transaction history...
+                    </div>
+                </div>
+
+                <button
+                    class="copy-button"
+                    id="refreshTransactionsBtn"
+                    type="button"
+                    style="margin-top:12px;"
+                >
+                    ↻ Refresh History
+                </button>
+
+            </section>
+
+            <div class="notice">
+                <strong>Important:</strong>
+                Your wallet balance and transaction history are loaded from
+                Supabase. Bank account details will become available after a
+                payment provider is securely integrated. Transfer and Exam PIN
+                services will be activated after their providers are connected.
+            </div>
+
+        </main>
+
+        <footer class="footer">
+            © 2026 A FARI DATA SUB. All rights reserved.
+        </footer>
+
+    </section>
+
+
+    <!-- SUPABASE -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+
+    <script>
+        "use strict";
+
+        const welcomePage = document.getElementById("welcomePage");
+        const dashboard = document.getElementById("dashboard");
+        const logoutBtn = document.getElementById("logoutBtn");
+        const statusMessage = document.getElementById("statusMessage");
+
+        const walletBalanceElement =
+            document.getElementById("walletBalance");
+
+        const balanceToggle =
+            document.getElementById("balanceToggle");
+
+        const transactionList =
+            document.getElementById("transactionList");
+
+        const copyAccountBtn =
+            document.getElementById("copyAccountBtn");
+
+        const refreshTransactionsBtn =
+            document.getElementById("refreshTransactionsBtn");
+
+        let supabaseClient = window.supabaseClient;
+        let currentUser = null;
+        let actualBalanceText = "₦0.00";
+        let balanceHidden = false;
+
+
+        function showWelcome() {
+            welcomePage.classList.remove("hidden");
+            dashboard.classList.add("hidden");
+            currentUser = null;
+        }
+
+
+        function showDashboard() {
+            welcomePage.classList.add("hidden");
+            dashboard.classList.remove("hidden");
+        }
+
+
+        function showMessage(message, isError = false) {
+            statusMessage.textContent = message;
+            statusMessage.classList.remove("hidden");
+            statusMessage.classList.toggle("error", isError);
+        }
+
+
+        function hideMessage() {
+            statusMessage.classList.add("hidden");
+            statusMessage.textContent = "";
+        }
+
+
+        function formatBalance(balance, currency = "NGN") {
+            const amount = Number(balance);
+
+            if (!Number.isFinite(amount)) {
+                return "₦0.00";
+            }
+
+            try {
+                return new Intl.NumberFormat("en-NG", {
+                    style: "currency",
+                    currency: currency || "NGN",
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                }).format(amount);
+            } catch (error) {
+                return "₦" + amount.toFixed(2);
+            }
+        }
+
+
+        function updateBalanceDisplay() {
+            walletBalanceElement.textContent = balanceHidden
+                ? "₦ ••••••"
+                : actualBalanceText;
+
+            balanceToggle.textContent = balanceHidden
+                ? "👁️ Show"
+                : "👁️ Hide";
+        }
+
+
+        balanceToggle.addEventListener("click", function () {
+            balanceHidden = !balanceHidden;
+            updateBalanceDisplay();
+        });
+
+
+        function setAccountProviderPlaceholder() {
+            document.getElementById("bankName").textContent =
+                "Awaiting API Integration";
+
+            document.getElementById("accountNumber").textContent =
+                "Not available yet";
+
+            copyAccountBtn.disabled = true;
+            copyAccountBtn.dataset.accountNumber = "";
+        }
+
+
+        function formatDate(value) {
+            if (!value) {
+                return "Date unavailable";
+            }
+
+            const date = new Date(value);
+
+            if (Number.isNaN(date.getTime())) {
+                return "Date unavailable";
+            }
+
+            return date.toLocaleString("en-NG", {
+                dateStyle: "medium",
+                timeStyle: "short"
+            });
+        }
+
+
+        async function loadTransactions(user) {
+            transactionList.replaceChildren();
+
+            const loading = document.createElement("div");
+            loading.className = "empty-state";
+            loading.textContent = "Loading transaction history...";
+            transactionList.appendChild(loading);
+
+            try {
+                const result = await supabaseClient
+                    .from("transactions")
+                    .select("*")
+                    .eq("user_id", user.id)
+                    .order("created_at", { ascending: false })
+                    .limit(50);
+
+                if (result.error) {
+                    console.error(
+                        "Transaction history error:",
+                        result.error.message
+                    );
+
+                    transactionList.replaceChildren();
+
+                    const errorBox = document.createElement("div");
+                    errorBox.className = "empty-state";
+                    errorBox.textContent =
+                        "Could not load transaction history. Please try again.";
+
+                    transactionList.appendChild(errorBox);
+                    return;
+                }
+
+                const transactions = result.data || [];
+                transactionList.replaceChildren();
+
+                if (transactions.length === 0) {
+                    const empty = document.createElement("div");
+                    empty.className = "empty-state";
+                    empty.textContent =
+                        "No transactions yet. Your transactions will appear here.";
+
+                    transactionList.appendChild(empty);
+                    return;
+                }
+
+                transactions.forEach(function (transaction) {
+                    const item = document.createElement("div");
+                    item.className = "transaction-item";
+
+                    const top = document.createElement("div");
+                    top.className = "transaction-top";
+
+                    const title = document.createElement("div");
+                    title.className = "transaction-title";
+                    title.textContent =
+                        transaction.description ||
+                        transaction.type ||
+                        "Transaction";
+
+                    const amount = document.createElement("div");
+                    amount.className = "transaction-amount";
+
+                    const numericAmount = Number(transaction.amount);
+
+                    amount.textContent = Number.isFinite(numericAmount)
+                        ? formatBalance(
+                            numericAmount,
+                            transaction.currency || "NGN"
+                        )
+                        : "Amount unavailable";
+
+                    top.appendChild(title);
+                    top.appendChild(amount);
+
+                    const meta = document.createElement("div");
+                    meta.className = "transaction-meta";
+                    meta.textContent =
+                        "Date: " + formatDate(transaction.created_at);
+
+                    if (transaction.reference) {
+                        const reference = document.createElement("div");
+                        reference.textContent =
+                            "Reference: " + transaction.reference;
+
+                        meta.appendChild(document.createElement("br"));
+                        meta.appendChild(reference);
+                    }
+
+                    const status = document.createElement("span");
+                    status.className = "transaction-status";
+
+                    const statusText = String(
+                        transaction.status || "pending"
+                    );
+
+                    const normalized = statusText.toLowerCase();
+
+                    if (
+                        ["success", "successful", "completed"]
+                        .includes(normalized)
+                    ) {
+                        status.classList.add("success");
+                    } else if (
+                        ["failed", "cancelled"].includes(normalized)
+                    ) {
+                        status.classList.add("failed");
+                    }
+
+                    status.textContent = statusText;
+
+                    item.appendChild(top);
+                    item.appendChild(meta);
+                    item.appendChild(status);
+
+                    transactionList.appendChild(item);
+                });
+
+            } catch (error) {
+                console.error("Transaction loading error:", error);
+
+                transactionList.replaceChildren();
+
+                const errorBox = document.createElement("div");
+                errorBox.className = "empty-state";
+                errorBox.textContent =
+                    "An error occurred while loading transactions.";
+
+                transactionList.appendChild(errorBox);
+            }
+        }
+
+
+        async function loadUserData(user) {
+            currentUser = user;
+
+            const email = user.email || "";
+
+            const fallbackName =
+                user.user_metadata?.full_name ||
+                user.user_metadata?.name ||
+                (email ? email.split("@")[0] : "User");
+
+            document.getElementById("userName").textContent =
+                fallbackName + " 👋";
+
+            document.getElementById("accountHolder").textContent =
+                fallbackName;
+
+            actualBalanceText = "Loading...";
+            balanceHidden = false;
+            updateBalanceDisplay();
+
+            document.getElementById("walletStatus").textContent =
+                "Loading wallet information...";
+
+            setAccountProviderPlaceholder();
+            hideMessage();
+            showDashboard();
+
+            try {
+                const profileResult = await supabaseClient
+                    .from("profiles")
+                    .select("full_name, phone_number")
+                    .eq("id", user.id)
+                    .maybeSingle();
+
+                if (profileResult.error) {
+                    console.error(
+                        "Profile loading error:",
+                        profileResult.error.message
+                    );
+                } else if (
+                    profileResult.data &&
+                    profileResult.data.full_name
+                ) {
+                    const fullName = profileResult.data.full_name;
+
+                    document.getElementById("userName").textContent =
+                        fullName + " 👋";
+
+                    document.getElementById("accountHolder").textContent =
+                        fullName;
+                }
+
+                const walletResult = await supabaseClient
+                    .from("wallets")
+                    .select("balance, currency")
+                    .eq("user_id", user.id)
+                    .maybeSingle();
+
+                if (walletResult.error) {
+                    console.error(
+                        "Wallet loading error:",
+                        walletResult.error.message
+                    );
+
+                    actualBalanceText = "Unavailable";
+                    updateBalanceDisplay();
+
+                    document.getElementById("walletStatus").textContent =
+                        "Could not load wallet. Please refresh.";
+
+                } else if (walletResult.data) {
+                    actualBalanceText = formatBalance(
+                        walletResult.data.balance,
+                        walletResult.data.currency
+                    );
+
+                    updateBalanceDisplay();
+
+                    document.getElementById("walletStatus").textContent =
+                        "Your wallet balance";
+
+                } else {
+                    actualBalanceText = "₦0.00";
+                    updateBalanceDisplay();
+
+                    document.getElementById("walletStatus").textContent =
+                        "No wallet record found.";
+                }
+
+                await loadTransactions(user);
+
+            } catch (error) {
+                console.error("Dashboard error:", error);
+
+                actualBalanceText = "Unavailable";
+                updateBalanceDisplay();
+
+                document.getElementById("walletStatus").textContent =
+                    "Please check your internet connection.";
+            }
+        }
+
+
+        async function checkLogin() {
+            if (!supabaseClient) {
+                showWelcome();
+                return;
+            }
+
+            try {
+                const { data, error } =
+                    await supabaseClient.auth.getSession();
+
+                if (error) {
+                    console.error("Session error:", error.message);
+                    showWelcome();
+                    return;
+                }
+
+                if (data.session && data.session.user) {
+                    await loadUserData(data.session.user);
+                } else {
+                    showWelcome();
+                }
+
+            } catch (error) {
+                console.error("Login check error:", error);
+                showWelcome();
+            }
+        }
+
+
+        logoutBtn.addEventListener("click", async function () {
+            if (!supabaseClient) {
+                window.location.href = "login.html";
+                return;
+            }
+
+            logoutBtn.disabled = true;
+            logoutBtn.textContent = "LOGGING OUT...";
+
+            try {
+                const { error } =
+                    await supabaseClient.auth.signOut();
+
+                if (error) {
+                    showMessage(
+                        "Logout failed: " + error.message,
+                        true
+                    );
+
+                    logoutBtn.disabled = false;
+                    logoutBtn.textContent = "LOG OUT";
+                    return;
+                }
+
+                window.location.replace("login.html");
+
+            } catch (error) {
+                showMessage(
+                    "Could not log out. Please try again.",
+                    true
+                );
+
+                logoutBtn.disabled = false;
+                logoutBtn.textContent = "LOG OUT";
+            }
+        });
+
+
+        copyAccountBtn.addEventListener("click", async function () {
+            const accountNumber =
+                copyAccountBtn.dataset.accountNumber || "";
+
+            if (!accountNumber) {
+                return;
+            }
+
+            try {
+                await navigator.clipboard.writeText(accountNumber);
+
+                copyAccountBtn.textContent = "COPIED";
+
+                setTimeout(function () {
+                    copyAccountBtn.textContent = "COPY";
+                }, 1800);
+
+            } catch (error) {
+                showMessage(
+                    "Could not copy the account number on this device.",
+                    true
+                );
+            }
+        });
+
+
+        refreshTransactionsBtn.addEventListener(
+            "click",
+            async function () {
+                if (!supabaseClient || !currentUser) {
+                    showMessage(
+                        "Please log in to view your transaction history.",
+                        true
+                    );
+                    return;
+                }
+
+                refreshTransactionsBtn.disabled = true;
+                refreshTransactionsBtn.textContent = "Refreshing...";
+
+                await loadTransactions(currentUser);
+
+                refreshTransactionsBtn.disabled = false;
+                refreshTransactionsBtn.textContent = "↻ Refresh History";
+            }
+        );
+
+
+        function openService(page) {
+            window.location.href = page;
+        }
+
+
+        function showComingSoon(serviceName) {
+            alert(
+                serviceName +
+                " is not connected yet. It will be available after its provider is integrated."
+            );
+        }
+
+
+        if (supabaseClient) {
+            supabaseClient.auth.onAuthStateChange(function (event) {
+                if (event === "SIGNED_OUT") {
+                    showWelcome();
+                    window.location.replace("login.html");
+                }
+            });
+        }
+
+
+        // Show the dashboard for an authenticated user.
+        // Otherwise, show the new welcome page.
+        checkLogin();
+    </script>
+
+</body>
+</html>

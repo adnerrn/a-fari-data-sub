@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Data Plans | A FARI DATA SUB</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header class="site-header">
+        <img
+            src="A-fari-logo.png.JPG"
+            alt="A FARI DATA SUB Logo"
+            class="logo"
+        >
+
+        <div class="brand-text">
+            <h1>A FARI DATA SUB</h1>
+            <p>A FARI AND BROTHERS</p>
+        </div>
+    </header>
+
+    <main class="data-plans-page">
+
+        <a href="buy-data.html" class="back-link">
+            ← Back to Networks
+        </a>
+
+        <h2 id="networkTitle">Choose a Data Plan</h2>
+
+        <p class="page-description">
+            Select your preferred data bundle.
+        </p>
+
+       <!-- PHONE NUMBER FIRST -->
+
+<section class="purchase-form">
+
+    <h2>Recipient Details</h2>
+
+    <label for="phoneNumber">
+        Phone Number
+    </label>
+
+    <input
+        type="tel"
+        id="phoneNumber"
+        placeholder="Enter phone number"
+        inputmode="numeric"
+        maxlength="11"
+    >
+
+</section>
+
+
+<!-- DATA PLANS BELOW PHONE NUMBER -->
+
+<section class="data-selection">
+
+    <h2>Choose Your Data Plan</h2>
+
+    <div id="plansGrid" class="plans-grid"></div>
+
+</section>
+
+
+<!-- CONTINUE BUTTON -->
+
+<section class="purchase-form">
+
+    <button
+        type="button"
+        id="continueBtn"
+        class="continue-button"
+    >
+        Continue
+    </button>
+
+    <p id="statusMessage" aria-live="polite"></p>
+
+</section>
+
+            <p id="statusMessage" aria-live="polite"></p>
+
+        </section>
+
+    </main>
+
+    <script>
+        const network = new URLSearchParams(
+            window.location.search
+        ).get("network");
+
+        const availableNetworks = [
+            "MTN",
+            "Airtel",
+            "Glo",
+            "9mobile"
+        ];
+
+        const plans = {
+            "MTN": [
+                { size: "500MB", price:  "Set price" },
+                { size: "1GB",   price:  "Set price" },
+                { size: "2GB",   price:  "Set price" },
+                { size: "5GB",   price:  "Set price" }
+            ],
+
+            "Airtel": [
+                { size: "500MB", price: "Set price" },
+                { size: "1GB",   price: "Set price" },
+                { size: "2GB",   price: "Set price" },
+                { size: "5GB",   price: "Set price" }
+            ],
+
+            "Glo": [
+                { size: "500MB", price: "Set price" },
+                { size: "1GB",   price: "Set price" },
+                { size: "2GB",   price: "Set price" },
+                { size: "5GB",   price: "Set price" }
+            ],
+
+            "9mobile": [
+                { size: "500MB", price: "Set price" },
+                { size: "1GB",   price: "Set price" },
+                { size: "2GB",   price: "Set price" },
+                { size: "5GB",   price: "Set price" }
+            ]
+        };
+
+        const title = document.getElementById("networkTitle");
+        const grid = document.getElementById("plansGrid");
+        const status = document.getElementById("statusMessage");
+
+        let selectedPlan = null;
+
+        if (!availableNetworks.includes(network)) {
+            title.textContent = "Network not selected";
+            status.textContent =
+                "Please go back and select a network.";
+
+        } else {
+            title.textContent = network + " Data Plans";
+
+            plans[network].forEach(function(plan) {
+                const card = document.createElement("button");
+
+                card.type = "button";
+                card.className = "plan-card";
+
+                card.innerHTML = `
+                    <h3>${plan.size}</h3>
+                    <p>Price: ${plan.price}</p>
+                    <span>Select Plan</span>
+                `;
+
+                card.addEventListener("click", function() {
+                    document.querySelectorAll(".plan-card")
+                        .forEach(function(item) {
+                            item.classList.remove("selected");
+                        });
+
+                    card.classList.add("selected");
+                    selectedPlan = plan;
+
+                    status.textContent =
+                        plan.size + " selected.";
+                });
+
+                grid.appendChild(card);
+            });
+        }
+
+        document.getElementById("continueBtn")
+            .addEventListener("click", function() {
+                const phone = document.getElementById(
+                    "phoneNumber"
+                ).value.trim();
+
+                if (!availableNetworks.includes(network)) {
+                    status.textContent =
+                        "Please select a valid network.";
+                    return;
+                }
+
+                if (!selectedPlan) {
+                    status.textContent =
+                        "Please select a data plan first.";
+                    return;
+                }
+
+                if (!/^0\d{10}$/.test(phone)) {
+                    status.textContent =
+                        "Enter a valid 11-digit Nigerian phone number.";
+                    return;
+                }
+
+                status.textContent =
+                    "Network: " + network +
+                    " | Plan: " + selectedPlan.size +
+                    " | Phone: " + phone +
+                    ". This is a demo. No payment or data transfer has occurred.";
+            });
+    </script>
+
+</body>
+</html>
